@@ -1,4 +1,3 @@
-import { Conext } from "@netlify/functions";
 import { fql, Client } from "fauna";
 import { faunaMethods } from "../src/utils/netlify-functions-path";
 import { StatusCodes } from 'http-status-codes';
@@ -6,16 +5,14 @@ import { StatusCodes } from 'http-status-codes';
 /**
  *
  * @param req {Request}
- * @param context {Context}
+ * @param context {import('@netlify/functions').Context}}
  * @returns {Promise<Response>}
  */
 export default async (req, context) => {
   if(req.method !== "POST")
     return new Response(null, { status: 400 });
 
-  const fauna = new Client({
-    client_timeout_buffer_ms: process.env.FAUNADB_TIMEOUT,
-  });
+  const fauna = new Client();
 
   const { method, data } = await req.json();
 
